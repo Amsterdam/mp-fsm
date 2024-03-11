@@ -4,7 +4,7 @@ from enum import StrEnum
 import pytest
 
 from mp_fsm.statemachine import (BaseCallback, BaseGuard, BaseStateMachine,
-                                 BaseTransition, StateAware, T)
+                                 BaseTransition, StateAware)
 
 
 class MyStates(StrEnum):
@@ -17,12 +17,12 @@ class MyObject(StateAware): ...
 
 
 class MyGuard(BaseGuard[MyObject]):
-    async def __call__(self, obj: T) -> bool:
+    async def __call__(self, obj: MyObject) -> bool:
         return True
 
 
 class MyCallback(BaseCallback[MyObject]):
-    async def __call__(self, obj: T) -> None:
+    async def __call__(self, obj: MyObject) -> None:
         print("HELLO")
 
 
