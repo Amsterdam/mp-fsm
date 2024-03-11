@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from enum import StrEnum
+from typing import override
 
 import pytest
 from pytest_mock import MockerFixture
@@ -49,14 +50,17 @@ async def test_statemachine(mocker: MockerFixture) -> None:
             return MyStates.STOP
 
         @property
+        @override
         def guards(self) -> list[BaseGuard[MyObject]]:
             return [guard]
 
         @property
+        @override
         def before(self) -> list[BaseCallback[MyObject]]:
             return [callback]
 
         @property
+        @override
         def after(self) -> list[BaseCallback[MyObject]]:
             return [callback]
 
@@ -92,16 +96,9 @@ async def test_statemachine_failing_guard() -> None:
             return MyStates.STOP
 
         @property
+        @override
         def guards(self) -> list[BaseGuard[MyObject]]:
             return [MyGuard()]
-
-        @property
-        def before(self) -> list[BaseCallback[MyObject]]:
-            return []
-
-        @property
-        def after(self) -> list[BaseCallback[MyObject]]:
-            return []
 
     class MyStateMachine(BaseStateMachine[MyObject]):
         @property

@@ -40,16 +40,16 @@ class BaseTransition(Generic[T], metaclass=ABCMeta):
     def to_state(self) -> str: ...
 
     @property
-    @abstractmethod
-    def guards(self) -> list[BaseGuard[T]]: ...
+    def guards(self) -> list[BaseGuard[T]]:
+        return []
 
     @property
-    @abstractmethod
-    def before(self) -> list[BaseCallback[T]]: ...
+    def before(self) -> list[BaseCallback[T]]:
+        return []
 
     @property
-    @abstractmethod
-    def after(self) -> list[BaseCallback[T]]: ...
+    def after(self) -> list[BaseCallback[T]]:
+        return []
 
 
 class BaseStateMachine(Generic[T], metaclass=ABCMeta):
