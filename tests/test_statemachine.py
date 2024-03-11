@@ -174,3 +174,30 @@ async def test_statemachine_reusable_callbacks(mocker: MockerFixture) -> None:
     assert my_object.state == MyStates.STOP
     assert guard_spy.call_count == 1
     assert callback_spy.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_statemachine_transition_without_callbacks() -> None:
+
+    class MyTransition(BaseTransition[MyObject]):
+        @property
+        def from_states(self) -> list[str]:
+            return [MyStates.START]
+
+        @property
+        def to_state(self) -> str:
+            return MyStates.STOP
+
+    class MyStateMachine(BaseStateMachine[MyObject]):
+        @property
+        def _transitions(self) -> dict[str, BaseTransition[MyObject]]:
+            return {"my_transition": MyTransition()}
+
+    my_object = MyObject()
+    my_object.state = MyStates.START
+
+    state_machine = MyStateMachine()
+
+    await state_machine.transition(my_object, "my_transition")
+
+    assert my_object.state == MyStates.STOP
