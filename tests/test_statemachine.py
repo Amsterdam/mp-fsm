@@ -3,8 +3,13 @@ from enum import StrEnum
 
 import pytest
 
-from mp_fsm.statemachine import (BaseCallback, BaseGuard, BaseStateMachine,
-                                 BaseTransition, StateAware)
+from mp_fsm.statemachine import (
+    BaseCallback,
+    BaseGuard,
+    BaseStateMachine,
+    BaseTransition,
+    StateAware,
+)
 
 
 class MyStates(StrEnum):
@@ -49,10 +54,6 @@ class MyTransition(BaseTransition[MyObject]):
 
 
 class MyStateMachine(BaseStateMachine[MyObject]):
-    @property
-    def _states(self) -> list[str]:
-        return [state for state in MyStates]
-
     @property
     def _transitions(self) -> dict[str, BaseTransition[MyObject]]:
         return {"my_transition": MyTransition()}

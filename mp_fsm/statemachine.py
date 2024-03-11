@@ -55,10 +55,6 @@ class BaseTransition(Generic[T], metaclass=ABCMeta):
 class BaseStateMachine(Generic[T], metaclass=ABCMeta):
     @property
     @abstractmethod
-    def _states(self) -> list[str]: ...
-
-    @property
-    @abstractmethod
     def _transitions(self) -> dict[str, BaseTransition[T]]: ...
 
     async def transition(self, state_aware: T, transition_name: str) -> None:
