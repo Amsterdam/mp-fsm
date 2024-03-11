@@ -9,6 +9,7 @@ from mp_fsm.statemachine import (
     BaseGuard,
     BaseStateMachine,
     BaseTransition,
+    GuardException,
     StateAware,
 )
 
@@ -73,3 +74,44 @@ async def test_statemachine(mocker: MockerFixture) -> None:
     assert my_object.state == MyStates.STOP
     assert guard_spy.call_count == 1
     assert callback_spy.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_statemachine_failing_guard() -> None:
+    class MyGuard(BaseGuard[MyObject]):
+        async def __call__(self, obj: MyObject) -> bool:
+            return False
+
+    class MyTransition(BaseTransition[MyObject]):
+        @property
+        def from_states(self) -> list[str]:
+            return [MyStates.START]
+
+        @property
+        def to_state(self) -> str:
+            return MyStates.STOP
+
+        @property
+        def guards(self) -> list[BaseGuard[MyObject]]:
+            return [MyGuard()]
+
+        @property
+        def before(self) -> list[BaseCallback[MyObject]]:
+            return []
+
+        @property
+        def after(self) -> list[BaseCallback[MyObject]]:
+            return []
+
+    class MyStateMachine(BaseStateMachine[MyObject]):
+        @property
+        def _transitions(self) -> dict[str, BaseTransition[MyObject]]:
+            return {"my_transition": MyTransition()}
+
+    my_object = MyObject()
+    my_object.state = MyStates.START
+
+    state_machine = MyStateMachine()
+
+    with pytest.raises(GuardException):
+        await state_machine.transition(my_object, "my_transition")
