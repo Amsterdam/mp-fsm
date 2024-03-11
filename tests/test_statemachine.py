@@ -12,6 +12,7 @@ from mp_fsm.statemachine import (
     BaseTransition,
     GuardException,
     StateAware,
+    TransitionNotFoundException,
 )
 
 
@@ -205,3 +206,28 @@ async def test_statemachine_transition_without_callbacks() -> None:
     await state_machine.transition(my_object, MyTransitions.MY_TRANSITION)
 
     assert my_object.state == MyStates.STOP
+
+
+@pytest.mark.asyncio
+async def test_statemachine_transition_not_found() -> None:
+    class MyTransition(BaseTransition[MyObject]):
+        @property
+        def from_states(self) -> list[str]:
+            return [MyStates.START]
+
+        @property
+        def to_state(self) -> str:
+            return MyStates.STOP
+
+    class MyStateMachine(BaseStateMachine[MyObject]):
+        @property
+        def _transitions(self) -> dict[str, BaseTransition[MyObject]]:
+            return {MyTransitions.MY_TRANSITION: MyTransition()}
+
+    my_object = MyObject()
+    my_object.state = MyStates.START
+
+    state_machine = MyStateMachine()
+
+    with pytest.raises(TransitionNotFoundException):
+        await state_machine.transition(my_object, "your_transition")
