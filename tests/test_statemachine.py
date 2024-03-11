@@ -20,6 +20,10 @@ class MyStates(StrEnum):
     STOP = "stop"
 
 
+class MyTransitions(StrEnum):
+    MY_TRANSITION = "my_transition"
+
+
 @dataclass
 class MyObject(StateAware): ...
 
@@ -67,13 +71,13 @@ async def test_statemachine(mocker: MockerFixture) -> None:
     class MyStateMachine(BaseStateMachine[MyObject]):
         @property
         def _transitions(self) -> dict[str, BaseTransition[MyObject]]:
-            return {"my_transition": MyTransition()}
+            return {MyTransitions.MY_TRANSITION: MyTransition()}
 
     my_object = MyObject()
     my_object.state = MyStates.START
 
     state_machine = MyStateMachine()
-    await state_machine.transition(my_object, "my_transition")
+    await state_machine.transition(my_object, MyTransitions.MY_TRANSITION)
 
     assert my_object.state == MyStates.STOP
     assert guard_spy.call_count == 1
@@ -103,7 +107,7 @@ async def test_statemachine_failing_guard() -> None:
     class MyStateMachine(BaseStateMachine[MyObject]):
         @property
         def _transitions(self) -> dict[str, BaseTransition[MyObject]]:
-            return {"my_transition": MyTransition()}
+            return {MyTransitions.MY_TRANSITION: MyTransition()}
 
     my_object = MyObject()
     my_object.state = MyStates.START
@@ -111,7 +115,7 @@ async def test_statemachine_failing_guard() -> None:
     state_machine = MyStateMachine()
 
     with pytest.raises(GuardException):
-        await state_machine.transition(my_object, "my_transition")
+        await state_machine.transition(my_object, MyTransitions.MY_TRANSITION)
 
 
 @pytest.mark.asyncio
@@ -163,13 +167,13 @@ async def test_statemachine_reusable_callbacks(mocker: MockerFixture) -> None:
     class MyStateMachine(BaseStateMachine[MyObject]):
         @property
         def _transitions(self) -> dict[str, BaseTransition[MyObject]]:
-            return {"my_transition": MyTransition()}
+            return {MyTransitions.MY_TRANSITION: MyTransition()}
 
     my_object = MyObject()
     my_object.state = MyStates.START
 
     state_machine = MyStateMachine()
-    await state_machine.transition(my_object, "my_transition")
+    await state_machine.transition(my_object, MyTransitions.MY_TRANSITION)
 
     assert my_object.state == MyStates.STOP
     assert guard_spy.call_count == 1
@@ -191,13 +195,13 @@ async def test_statemachine_transition_without_callbacks() -> None:
     class MyStateMachine(BaseStateMachine[MyObject]):
         @property
         def _transitions(self) -> dict[str, BaseTransition[MyObject]]:
-            return {"my_transition": MyTransition()}
+            return {MyTransitions.MY_TRANSITION: MyTransition()}
 
     my_object = MyObject()
     my_object.state = MyStates.START
 
     state_machine = MyStateMachine()
 
-    await state_machine.transition(my_object, "my_transition")
+    await state_machine.transition(my_object, MyTransitions.MY_TRANSITION)
 
     assert my_object.state == MyStates.STOP
