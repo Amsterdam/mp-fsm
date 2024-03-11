@@ -257,3 +257,31 @@ async def test_statemachine_transition_from_invalid_state() -> None:
 
     with pytest.raises(WrongStateException):
         await state_machine.transition(my_object, MyTransitions.MY_TRANSITION)
+
+
+@pytest.mark.asyncio
+async def test_statemachine_on_derived_object() -> None:
+    class DerivedObject(MyObject): ...
+
+    class MyTransition(BaseTransition[MyObject]):
+        @property
+        def from_states(self) -> list[str]:
+            return [MyStates.START]
+
+        @property
+        def to_state(self) -> str:
+            return MyStates.STOP
+
+    class MyStateMachine(BaseStateMachine[MyObject]):
+        @property
+        def _transitions(self) -> dict[str, BaseTransition[MyObject]]:
+            return {MyTransitions.MY_TRANSITION: MyTransition()}
+
+    derived_object = DerivedObject()
+    derived_object.state = MyStates.START
+
+    state_machine = MyStateMachine()
+
+    await state_machine.transition(derived_object, MyTransitions.MY_TRANSITION)
+
+    assert derived_object.state == MyStates.STOP
