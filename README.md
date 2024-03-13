@@ -2,7 +2,23 @@
 This package provides a simple means
 of defining [Finite State Machines](https://en.wikipedia.org/wiki/Finite-state_machine).
 
-It is fully typed and works asynchronously using Python's [asyncio](https://docs.python.org/3/library/asyncio.html).
+# Motivation
+The landscape of available Finite State Machine libraries in Python is vast. However, many existing solutions suffer from various drawbacks that don't align well with modern development practices and specific requirements we have for projects within the Gemeente Amsterdam. Some of the common issues encountered with existing FSM libraries include:
+
+- Lack of maintenance over extended periods, leading to potential compatibility and reliability concerns.
+- Requirements to implement logic directly within the database model, which conflicts with the preferred usage of dataclasses in a Domain-Driven Design (DDD) context.
+- Absence of strong typing support, while the project enforces strict typing using tools like mypy.
+- Inadequate asynchronous support, hindering integration with asyncio-based applications.
+- Reliance on decorators, making it challenging to implement with an abstraction layer in between.
+- Combinations of the above issues, further complicating adoption and maintenance efforts.
+
+# Features
+Fully typed: This package is designed with robust type annotations throughout, ensuring type safety and compatibility with type-checking tools like mypy.
+Asynchronous support: Utilizes Python's asyncio for asynchronous execution, enabling seamless integration with asyncio-based applications.
+Dataclass compatibility: Works seamlessly with Python's dataclasses, aligning with modern Pythonic practices and Domain-Driven Design (DDD) principles.
+Customizable transitions: Define transitions between states flexibly, allowing for complex state transition logic with ease.
+Guard conditions: Implement guards to enforce conditions that must be met for a state transition to occur, enhancing control over state transitions.
+Callbacks: Execute custom code before or after a state transition, facilitating integration with existing systems and workflows.
 
 A simple example of how to implement a state machine using this package:
 ```python
