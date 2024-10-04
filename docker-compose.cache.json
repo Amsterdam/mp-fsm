@@ -1,0 +1,15 @@
+{
+    "target": {
+      "mp-fsm": {
+        "cache-from": [
+          "type=registry,ref=ghcr.io/amsterdam/mp-fsm:cache"
+        ],
+        "cache-to": [
+          "type=registry,ref=ghcr.io/amsterdam/mp-fsm-core:cache"
+        ],
+        "output": [
+          "type=docker"
+        ]
+      }
+    }
+  }
