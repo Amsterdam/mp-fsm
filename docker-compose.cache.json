@@ -5,7 +5,7 @@
           "type=registry,ref=ghcr.io/amsterdam/mp-fsm:cache"
         ],
         "cache-to": [
-          "type=registry,ref=ghcr.io/amsterdam/mp-fsm-core:cache"
+          "type=registry,ref=ghcr.io/amsterdam/mp-fsm:cache"
         ],
         "output": [
           "type=docker"
