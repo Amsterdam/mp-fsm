@@ -5,10 +5,16 @@ from typing import TypeVar, override
 import pytest
 from pytest_mock import MockerFixture
 
-from mp_fsm.statemachine import (BaseCallback, BaseGuard, BaseStateMachine,
-                                 BaseTransition, GuardException, StateAware,
-                                 TransitionNotFoundException,
-                                 WrongStateException)
+from mp_fsm.statemachine import (
+    BaseCallback,
+    BaseGuard,
+    BaseStateMachine,
+    BaseTransition,
+    GuardException,
+    StateAware,
+    TransitionNotFoundException,
+    WrongStateException,
+)
 
 
 class MyStates(StrEnum):
