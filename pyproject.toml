@@ -24,4 +24,12 @@ build-backend = "poetry.core.masonry.api"
 [tool.coverage.run]
 omit = [
     "tests/*"
+
 ]
+
+[tool.isort]
+profile = "black"
+overwrite_in_place = true
+
+[tool.mypy]
+strict = true
