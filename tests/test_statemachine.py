@@ -30,7 +30,7 @@ class MyTransitions(StrEnum):
 class MyObject(StateAware): ...
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_statemachine(mocker: MockerFixture) -> None:
     class MyGuard(BaseGuard[MyObject]):
         async def __call__(self, obj: MyObject) -> bool:
@@ -86,7 +86,7 @@ async def test_statemachine(mocker: MockerFixture) -> None:
     assert callback_spy.call_count == 2
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_statemachine_failing_guard() -> None:
     class MyGuard(BaseGuard[MyObject]):
         async def __call__(self, obj: MyObject) -> bool:
@@ -120,7 +120,7 @@ async def test_statemachine_failing_guard() -> None:
         await state_machine.transition(my_object, MyTransitions.MY_TRANSITION)
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_statemachine_reusable_callbacks(mocker: MockerFixture) -> None:
     T = TypeVar("T", bound=StateAware)
 
@@ -182,7 +182,7 @@ async def test_statemachine_reusable_callbacks(mocker: MockerFixture) -> None:
     assert callback_spy.call_count == 2
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_statemachine_transition_without_callbacks() -> None:
 
     class MyTransition(BaseTransition[MyObject]):
@@ -209,7 +209,7 @@ async def test_statemachine_transition_without_callbacks() -> None:
     assert my_object.state == MyStates.STOP
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_statemachine_transition_not_found() -> None:
     class MyTransition(BaseTransition[MyObject]):
         @property
@@ -234,7 +234,7 @@ async def test_statemachine_transition_not_found() -> None:
         await state_machine.transition(my_object, "your_transition")
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_statemachine_transition_from_invalid_state() -> None:
     class MyTransition(BaseTransition[MyObject]):
         @property
@@ -259,7 +259,7 @@ async def test_statemachine_transition_from_invalid_state() -> None:
         await state_machine.transition(my_object, MyTransitions.MY_TRANSITION)
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_statemachine_on_derived_object() -> None:
     class DerivedObject(MyObject): ...
 
