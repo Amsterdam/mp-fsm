@@ -1,12 +1,12 @@
-[tool.poetry]
+[project]
 name = "mp-fsm"
 version = "0.1.0"
 description = ""
-authors = ["Youri Westerman <y.westerman@amsterdam.nl>"]
+authors = [
+    {name = "Youri Westerman",email = "y.westerman@amsterdam.nl"},
+]
 readme = "README.md"
-
-[tool.poetry.dependencies]
-python = "^3.12"
+requires-python = ">=3.12"
 
 [tool.poetry.group.dev.dependencies]
 anyio = "^4.8.0"
