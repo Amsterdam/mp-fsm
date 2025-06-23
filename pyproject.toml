@@ -13,7 +13,7 @@ anyio = "^4.8.0"
 black = "^25.1.0"
 isort = "^6.0.0"
 mypy = "^1.16.0"
-pytest = "^8.4.0"
+pytest = "^8.4.1"
 pytest-cov = "^6.2.1"
 pytest-mock = "^3.14.1"
 
