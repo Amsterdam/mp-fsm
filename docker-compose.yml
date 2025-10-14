@@ -1,7 +1,0 @@
-services:
-  mp-fsm:
-    image: amsterdam/mp-fsm
-    build:
-      context: .
-    volumes:
-      - ".:/opt/mp-fsm"

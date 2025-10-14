@@ -1,8 +1,9 @@
 __pycache__
 .coverage
 .idea/
-README.md
+Containerfile
 Dockerfile
 docker
 docker-compose.yml
 docker-compose.cache.json
+compose.yaml
