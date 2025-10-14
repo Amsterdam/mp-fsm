@@ -1,7 +1,6 @@
 __pycache__
 .coverage
 .idea/
-README.md
 Containerfile
 Dockerfile
 docker
