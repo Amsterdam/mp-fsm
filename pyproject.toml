@@ -13,10 +13,10 @@ dev = [
     "anyio>=4.10.0",
     "black>=25.1.0",
     "isort>=7.0.0",
-    "mypy>=1.18.2",
     "pytest>=9.0.3",
     "pytest-cov>=7.0.0",
     "pytest-mock>=3.14.1",
+    "ty>=0.0.89",
 ]
 
 [build-system]
@@ -32,6 +32,3 @@ omit = [
 [tool.isort]
 profile = "black"
 overwrite_in_place = true
-
-[tool.mypy]
-strict = true
