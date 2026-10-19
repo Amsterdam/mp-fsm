@@ -33,6 +33,3 @@ omit = [
 [tool.isort]
 profile = "black"
 overwrite_in_place = true
-
-[tool.mypy]
-strict = true
